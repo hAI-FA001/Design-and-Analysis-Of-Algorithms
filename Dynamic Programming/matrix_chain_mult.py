@@ -2,7 +2,7 @@ import numpy as np
 
 def matrix_chain_mult_order(p, n):
     m = np.zeros((n, n))
-    s = np.zeros((n, n))
+    s = np.zeros((n, n), dtype=np.int64)
     
     # (n, n) matrix
     # first, solve diag+1, then diag+2 etc
@@ -42,11 +42,21 @@ def matrix_chain_mult_order(p, n):
     
     return m, s
 
+def print_parenthesis(s, i, j):
+    if i == j:
+        print(f"A_{i} ", end='')
+    else:
+        print("( ", end='')
+        print_parenthesis(s, i, s[i, j])
+        print_parenthesis(s, s[i, j]+1, j)
+        print(")", end='')
 n = 6
 dims = [30, 35, 15, 5, 10, 20, 25]
 
 costs, cuts = matrix_chain_mult_order(dims, n)
 
-print(costs)
-print(cuts)
-    
+print("Cost Matrix:\n", costs)
+print("Cuts Matrix:\n", cuts)
+
+print("Order: ", end='')
+print_parenthesis(cuts, 0, 5)
