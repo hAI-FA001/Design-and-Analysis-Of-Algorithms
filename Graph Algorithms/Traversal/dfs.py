@@ -20,7 +20,7 @@ class Graph:
         self.Adj = adj
 
 
-def dfs(G: Graph, s: Vertex):
+def dfs(G: Graph):
     def dfs_visit(G: Graph, u: Vertex):
         # use these variables from outer scope
         nonlocal time, traversal
@@ -56,20 +56,21 @@ def dfs(G: Graph, s: Vertex):
             dfs_visit(G, u)
     
     # return the traversal, sorted in order of start time
-    return sorted(traversal, key=lambda x: int(x[x.index('at')+3:x.index('to')].strip()))
+    return sorted(traversal, key=lambda x: int(x[x.index('at', x.index(')'))+3:x.index('to', x.index(')'))].strip()))
 
 
 color = Enum('Color', ['WHITE', 'GRAY', 'BLACK'])
 
-vertices = [Vertex(f'V{i+1}') for i in range(5)]
-adj = {v: random.sample(vertices, k=random.randint(1, len(vertices)))
-       for v in vertices}
-G = Graph(vertices, adj)
+if __name__ == '__main__':
+    vertices = [Vertex(f'V{i+1}') for i in range(5)]
+    adj = {v: random.sample(vertices, k=random.randint(1, len(vertices)))
+        for v in vertices}
+    G = Graph(vertices, adj)
 
-print('Adjecency List:')
-for u in adj:
-    vs = adj[u]
-    print(f'- {u.label}: {' '.join([v.label for v in vs])}')
+    print('Adjecency List:')
+    for u in adj:
+        vs = adj[u]
+        print(f'- {u.label}: {' '.join([v.label for v in vs])}')
 
-traversal = dfs(G, vertices[0])
-print('\nTraversal order:\n-', '\n- '.join(traversal))
+    traversal = dfs(G)
+    print('\nTraversal order:\n-', '\n- '.join(traversal))
