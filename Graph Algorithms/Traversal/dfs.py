@@ -1,6 +1,7 @@
 from enum import Enum
 import random
 
+
 class Color(Enum):
     WHITE=0
     GRAY=1
@@ -13,6 +14,9 @@ class Vertex:
         self.d = float('inf')
         self.f = float('inf')
         self.pi = None
+    
+    def __repr__(self):
+        return self.label
 
 class Graph:
     def __init__(self, vertices, adj):
@@ -45,7 +49,7 @@ def dfs(G: Graph):
         u.color = color.BLACK
         
         # record the info
-        traversal.append(f'Visited ({u.pi.label if u.pi is not None else None}, {u.label}) at {u.d} to {u.f}')
+        traversal.append(u)
     
     traversal = []
     time = 0
@@ -56,7 +60,7 @@ def dfs(G: Graph):
             dfs_visit(G, u)
     
     # return the traversal, sorted in order of start time
-    return sorted(traversal, key=lambda x: int(x[x.index('at', x.index(')'))+3:x.index('to', x.index(')'))].strip()))
+    return sorted(traversal, key=lambda v: v.d)
 
 
 color = Enum('Color', ['WHITE', 'GRAY', 'BLACK'])
@@ -70,7 +74,9 @@ if __name__ == '__main__':
     print('Adjecency List:')
     for u in adj:
         vs = adj[u]
-        print(f'- {u.label}: {' '.join([v.label for v in vs])}')
+        print(f'- {u}: {' '.join([str(v) for v in vs])}')
 
     traversal = dfs(G)
-    print('\nTraversal order:\n-', '\n- '.join(traversal))
+    print('\nTraversal order:')
+    for v in traversal:
+        print(f'- Visited ({v.pi if v.pi is not None else None}, {v}) at {v.d} to {v.f}')

@@ -1,9 +1,9 @@
-import random
 from ..Traversal.dfs import dfs, Graph, Vertex
+
 
 def topo_sort(G: Graph):
     traversal = dfs(G)
-    return sorted(traversal, key=lambda x: int(x[x.index('to', x.index(')'))+3:].strip()), reverse=True)
+    return sorted(traversal, key=lambda v: v.f, reverse=True)
 
 
 # example from book
@@ -25,7 +25,9 @@ G = Graph(vertices, adj)
 print('Adjecency List:')
 for u in adj:
     vs = adj[u]
-    print(f'- {u.label}: {' '.join([v.label for v in vs])}')
+    print(f'- {u}: {' '.join([str(v) for v in vs])}')
     
 topo_sorted = topo_sort(G)
-print('\nSorted:\n-', '\n- '.join(topo_sorted))
+print('\nSorted:')
+for v in topo_sorted:
+    print(f'- {f'({v.pi if v.pi is not None else None}, {v})':20}| {v.d} to {v.f}')
