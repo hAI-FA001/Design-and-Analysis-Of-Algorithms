@@ -1,27 +1,5 @@
-from enum import Enum
+from ..Data_Structures.graph import color, Vertex, Graph
 import random
-
-
-class Color(Enum):
-    WHITE=0
-    GRAY=1
-    BLACK=2
-
-class Vertex:
-    def __init__(self, label):
-        self.label = label
-        self.color = color.WHITE
-        self.d = float('inf')
-        self.f = float('inf')
-        self.pi = None
-    
-    def __repr__(self):
-        return self.label
-
-class Graph:
-    def __init__(self, vertices, adj):
-        self.V = vertices
-        self.Adj = adj
 
 
 def dfs(G: Graph):
@@ -63,7 +41,6 @@ def dfs(G: Graph):
     return sorted(traversal, key=lambda v: v.d)
 
 
-color = Enum('Color', ['WHITE', 'GRAY', 'BLACK'])
 
 if __name__ == '__main__':
     vertices = [Vertex(f'V{i+1}') for i in range(5)]

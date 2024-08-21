@@ -1,4 +1,5 @@
-from ..Traversal.dfs import dfs, Graph, Vertex
+from ..Data_Structures.graph import Graph, Vertex
+from ..Traversal.dfs import dfs
 
 
 def topo_sort(G: Graph):
